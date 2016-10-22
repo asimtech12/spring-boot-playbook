@@ -46,7 +46,11 @@
        dest: /usr/bin/
        mode: 755
    
-   - selinux: state=disabled
+#   - selinux: state=disabled
    
-   - iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
-     become: yes
+#   - iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
+#     become: yes
+    
+   - name: Open the Firewall ports
+     command: 'iptables -F'
+	 
