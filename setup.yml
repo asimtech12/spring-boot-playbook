@@ -44,3 +44,5 @@
        url: https://raw.githubusercontent.com/asimtech12/spring-boot-playbook/master/myapp
        dest: /usr/bin/
        mode: 755
+   
+   - selinux: state=disabled
