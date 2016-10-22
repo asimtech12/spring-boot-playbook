@@ -53,4 +53,3 @@
     
    - name: Open the Firewall ports
      command: 'iptables -F'
-	 
