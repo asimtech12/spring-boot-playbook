@@ -7,5 +7,4 @@ wget https://raw.githubusercontent.com/asimtech12/spring-boot-playbook/master/se
 rpm -ivh /opt/epel-release-latest-6.noarch.rpm
 yum upgrade -y
 yum install ansible -y
-#cp /opt/helper.sh /usr/bin/myapp
-echo"*************pre-reques are completed successfully***************"
+echo "*************pre-reques are completed successfully***************"
