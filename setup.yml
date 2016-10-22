@@ -39,6 +39,7 @@
 
    - name: Extract Mavan archive
      command: "tar -xzf {{maven_archive}} -C {{download_folder}} creates={{download_folder}}/{{maven_name}}"
+   
    - name: set the helper script in environment
      get_url:
        url: https://raw.githubusercontent.com/asimtech12/spring-boot-playbook/master/myapp
