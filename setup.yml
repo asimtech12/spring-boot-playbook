@@ -46,3 +46,6 @@
        mode: 755
    
    - selinux: state=disabled
+   
+   - iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
+     become: yes
