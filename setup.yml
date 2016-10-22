@@ -1,41 +1,46 @@
 ---
-- hosts: localhost
-  vars:
-    download_url: http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.tar.gz
-    download_folder: /opt
-    java_name: "{{download_folder}}/jdk1.7.0_45"
-    java_archive: "{{download_folder}}/jdk-7u45-linux-x64.tar.gz"
-    maven_download: http://apache.claz.org/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz
-    maven_name: apache-maven-3.1.1-bin
-    maven_archive: "{{download_folder}}/{{maven_name}}.tar.gz"
-    java_folder: /usr/lib/jvm
-    maven_home: /opt/apache-maven-3.1.1
+ - hosts: localhost
+   vars:
+     download_url: http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.tar.gz
+     download_folder: /opt
+     java_name: "{{download_folder}}/jdk1.7.0_45"
+     java_archive: "{{download_folder}}/jdk-7u45-linux-x64.tar.gz"
+     maven_download: http://apache.claz.org/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz
+     maven_name: apache-maven-3.1.1-bin
+     maven_archive: "{{download_folder}}/{{maven_name}}.tar.gz"
+     java_folder: /usr/lib/jvm
+     maven_home: /opt/apache-maven-3.1.1
 
-  tasks:
+   tasks:
 
-  - name: Download Java
-    command: "wget -q -O {{java_archive}} --no-check-certificate --no-cookies --header 'Cookie: oraclelicense=accept-securebackup-cookie' {{download_url}} creates={{java_archive}}"
+   - name: Download Java
+     command: "wget -q -O {{java_archive}} --no-check-certificate --no-cookies --header 'Cookie: oraclelicense=accept-securebackup-cookie' {{download_url}} creates={{java_archive}}"
 
-  - name: Unpack archive
-    command: "tar -zxf {{java_archive}} -C {{download_folder}} creates={{java_name}}"
+   - name: Unpack archive
+     command: "tar -zxf {{java_archive}} -C {{download_folder}} creates={{java_name}}"
 
-  - name: Fix ownership
-    file: state=directory path={{java_name}} owner=root group=root recurse=yes
+   - name: Fix ownership
+     file: state=directory path={{java_name}} owner=root group=root recurse=yes
 
-  - name: Make Java available for system
-    command: 'alternatives --install "/usr/bin/java" "java" "{{java_name}}/bin/java" 2000'
+   - name: Make Java available for system
+     command: 'alternatives --install "/usr/bin/java" "java" "{{java_name}}/bin/java" 2000'
 
-  - name: Clean up
-    file: state=absent path={{java_archive}}
+   - name: Clean up
+     file: state=absent path={{java_archive}}
 
-  - name: Install git binary
-    yum: pkg=git
+   - name: Install git binary
+     yum: pkg=git
 
-  - name: Clone git repo
-    git: repo=git://github.com/stormpath/stormpath-spring-boot-jpa-example.git dest=/opt/src
+   - name: Clone git repo
+     git: repo=git://github.com/stormpath/stormpath-spring-boot-jpa-example.git dest=/opt/src
 
-  - name: Download maven
-    command: 'wget -q -O {{maven_archive}} {{maven_download}} creates={{maven_archive}}'
+   - name: Download maven
+     command: 'wget -q -O {{maven_archive}} {{maven_download}} creates={{maven_archive}}'
 
-  - name: Extract Mavan archive
-    command: "tar -xzf {{maven_archive}} -C {{download_folder}} creates={{download_folder}}/{{maven_name}}"
+   - name: Extract Mavan archive
+     command: "tar -xzf {{maven_archive}} -C {{download_folder}} creates={{download_folder}}/{{maven_name}}"
+   - name: set the helper script in environment
+     get_url:
+       url: https://raw.githubusercontent.com/asimtech12/spring-boot-playbook/master/myapp
+       dest: /usr/bin/
+       mode: 755
