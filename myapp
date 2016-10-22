@@ -10,7 +10,7 @@ start(){
 echo starting...;
 cd $app_dir
 $maven_home/bin/mvn spring-boot:run > /tmp/start.out &
-sleep 5s;
+sleep 20s;
 echo "server started"
 }
 
